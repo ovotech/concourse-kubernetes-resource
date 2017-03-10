@@ -33,7 +33,7 @@ resources:
 * `password`: *Required if `auth_method` = `password`.* Admin password.
 * `admin_key`: *Required if `auth_method` = `certs`.* Base64 encoded PEM.
 * `admin_cert`: *Required if `auth_method` = `certs`.* Base64 encoded PEM.
-* `resource_type`: *Required.* Resource type to operate upon (valid values: `deployment`, `replicationcontroller`, `job`).
+* `resource_type`: *Required.* Resource type to operate upon (valid values: `deployment`, `replicationcontroller`, `job`, `pheonix-job`).
 * `resource_name`: *Required.* Resource name to operate upon.
 * `container_name`: *Optional.* For multi-container pods, specify the name of the container being updated. (Default: `resource_name`)
 
