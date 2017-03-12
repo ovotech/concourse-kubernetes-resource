@@ -62,6 +62,15 @@ function get_kubectl_cmd {
     echo "$kubectl"
 }
 
+function get_resource_type {
+    payload=$1
+
+    custom_prefix="phoenix-"
+
+    raw_resource_type=$(jq -r .source.resource_type < "$payload")
+
+    echo "$raw_resource_type" | sed -e "s/$custom_prefix//"    
+}
 
 PAYLOAD=$(get_payload_file_path)
 KUBECTL=$(get_kubectl_cmd "$PAYLOAD")

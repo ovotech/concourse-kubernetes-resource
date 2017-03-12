@@ -9,7 +9,7 @@ source "$(dirname "$0")/common.sh"
 cd "$1"
 
 # get kube resource id
-RESOURCE_TYPE=$(jq -r .source.resource_type < "$PAYLOAD")
+RESOURCE_TYPE=$(get_resource_type "$PAYLOAD")
 RESOURCE_NAME=$(jq -r .source.resource_name < "$PAYLOAD")
 if [[ -z "$RESOURCE_TYPE" ]] || [[ -z "$RESOURCE_NAME" ]]; then
     result=$(jq -n "[]")

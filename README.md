@@ -33,7 +33,7 @@ resources:
 * `password`: *Required if `auth_method` = `password`.* Admin password.
 * `admin_key`: *Required if `auth_method` = `certs`.* Base64 encoded PEM.
 * `admin_cert`: *Required if `auth_method` = `certs`.* Base64 encoded PEM.
-* `resource_type`: *Required.* Resource type to operate upon (valid values: `deployment`, `replicationcontroller`, `job`).
+* `resource_type`: *Required.* Resource type to operate upon (valid values: `deployment`, `replicationcontroller`, `job` and a special one [`phoenix-job`](#phoenix-job)).
 * `resource_name`: *Required.* Resource name to operate upon.
 * `container_name`: *Optional.* For multi-container pods, specify the name of the container being updated. (Default: `resource_name`)
 
@@ -44,6 +44,12 @@ Applies a kubectl action.
 #### Parameters
 * `image_name`: *Required.* Path to file containing docker image name.
 * `image_tag`: *Required.* Path to file container docker image tag.
+
+### phoenix-job
+
+This has been added out of a need for updating a Job (using the current name) with a new image. We use [cronetes](https://github.com/wercker/cronetes) to schedule jobs, this 
+requires the job to have the same name. This resource type will be removed in favour of [cron-jobs](https://kubernetes.io/docs/user-guide/cron-jobs/) when it becomes non alpha. 
+So consider this a alpha feature subject to change.
 
 ## Example
 
