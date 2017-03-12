@@ -67,7 +67,7 @@ create_resource() {
     $KUBECTL create -f "$RESOURCE_FILE"
 }
 
-rise_from_the_ashes() {
+replace_resource() {
     RESOURCE_TYPE=$1
     RESOURCE=$2
     RESOURCE_FILE=$3
@@ -116,7 +116,7 @@ case $RESOURCE_TYPE in
     job)
     start_job "$RESOURCE_PATH" "$IMG" "$(date +%s)";;
     phoenix-job)
-    rise_from_the_ashes "job" "$RESOURCE_NAME" "$RESOURCE_PATH" "$IMG";;
+    replace_resource "job" "$RESOURCE_NAME" "$RESOURCE_PATH" "$IMG";;
     *)
     exit 1
 esac
