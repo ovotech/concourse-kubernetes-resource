@@ -20,6 +20,16 @@ deploy() {
     $KUBECTL rollout status "deployment/$DEPLOYMENT"
 }
 
+apply() {
+    JOB=$1
+    IMAGE=$2
+
+    [ -n "$JOB" ] || exit 1
+    [ -n "$IMAGE" ] || exit 1
+
+    cat "$JOB" | IMAGE=$IMAGE envsubst | $KUBECTL apply -f -
+}
+
 rollingupdate() {
     RC=$1
     IMAGE=$2
@@ -117,6 +127,8 @@ case $RESOURCE_TYPE in
     start_job "$RESOURCE_PATH" "$IMG" "$(date +%s)";;
     phoenix-job)
     replace_resource "job" "$RESOURCE_NAME" "$RESOURCE_PATH" "$IMG";;
+    cronjob)
+    apply "$RESOURCE_PATH" "$IMG";;
     *)
     exit 1
 esac

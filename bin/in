@@ -15,9 +15,12 @@ if [[ -z "$RESOURCE_TYPE" ]] || [[ -z "$RESOURCE_NAME" ]]; then
 else
     export KUBECTL
 
-    RESOURCE="$RESOURCE_TYPE/$RESOURCE_NAME"
-
-    IMG=$($KUBECTL get -o json "$RESOURCE" | jq -r '.spec.template.spec.containers[0].image')
+    if [ "$RESOURCE_TYPE" == "cronjob" ]; then
+        IMG=$($KUBECTL get -o json "$RESOURCE_TYPE" "$RESOURCE_NAME" | jq -r '.spec.jobTemplate.spec.template.spec.containers[0].image')
+    else 
+        RESOURCE="$RESOURCE_TYPE/$RESOURCE_NAME"
+        IMG=$($KUBECTL get -o json "$RESOURCE" | jq -r '.spec.template.spec.containers[0].image')
+    fi
 
     result="$(jq -n "{version:{container:\"$IMG\"}}")"
 fi
